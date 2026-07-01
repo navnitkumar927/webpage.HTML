@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodieHub - Food Web App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #fff8f0;
+      color: #333;
+    }
+
+    header {
+      background: #ff6b35;
+      color: white;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: bold;
+    }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 8%;
+      background: linear-gradient(to right, #fff3e8, #ffe0cc);
+    }
+
+    .hero-text {
+      max-width: 520px;
+    }
+
+    .hero-text h1 {
+      font-size: 52px;
+      color: #ff4d00;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #ff6b35;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero img {
+      width: 420px;
+      max-width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    section {
+      padding: 60px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      color: #ff4d00;
+      margin-bottom: 40px;
+    }
+
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto 35px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+
+    .food-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .food-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .food-info {
+      padding: 20px;
+    }
+
+    .food-info h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .food-info p {
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price {
+      color: #ff4d00;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .cart {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .total {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: right;
+      color: #ff4d00;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      background: #222;
+      color: white;
+      padding: 25px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 8px;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text h1 {
+        font-size: 38px;
+      }
+
+      .hero img {
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">FoodieHub</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#cart">Cart</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <h1>Delicious Food Delivered Fast</h1>
+      <p>Order fresh, tasty, and affordable meals from your favorite local restaurants. Hot food, quick delivery, and simple ordering.</p>
+      <a href="#menu" class="btn">Order Now</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" alt="Food" />
+  </section>
+
+  <section id="menu">
+    <h2 class="section-title">Our Menu</h2>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search food..." onkeyup="searchFood()" />
+    </div>
+
+    <div class="food-grid" id="foodGrid">
+      <div class="food-card" data-name="pizza">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80" alt="Pizza" />
+        <div class="food-info">
+          <h3>Cheese Pizza</h3>
+          <p>Loaded with mozzarella cheese and fresh toppings.</p>
+          <div class="price-row">
+            <span class="price">₹249</span>
+            <button class="btn" onclick="addToCart('Cheese Pizza', 249)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card" data-name="burger">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80" alt="Burger" />
+        <div class="food-info">
+          <h3>Veg Burger</h3>
+          <p>Crispy patty, fresh lettuce, cheese, and sauces.</p>
+          <div class="price-row">
+            <span class="price">₹149</span>
+            <button class="btn" onclick="addToCart('Veg Burger', 149)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card" data-name="pasta">
+        <img src="https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?auto=format&fit=crop&w=700&q=80" alt="Pasta" />
+        <div class="food-info">
+          <h3>White Sauce Pasta</h3>
+          <p>Creamy pasta with herbs, vegetables, and cheese.</p>
+          <div class="price-row">
+            <span class="price">₹199</span>
+            <button class="btn" onclick="addToCart('White Sauce Pasta', 199)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card" data-name="biryani">
+        <img src="https://images.unsplash.com/photo-1631515242808-497c3fbd3972?auto=format&fit=crop&w=700&q=80" alt="Biryani" />
+        <div class="food-info">
+          <h3>Veg Biryani</h3>
+          <p>Flavorful rice cooked with spices and vegetables.</p>
+          <div class="price-row">
+            <span class="price">₹179</span>
+            <button class="btn" onclick="addToCart('Veg Biryani', 179)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card" data-name="noodles">
+        <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=700&q=80" alt="Noodles" />
+        <div class="food-info">
+          <h3>Hakka Noodles</h3>
+          <p>Spicy stir-fried noodles with vegetables.</p>
+          <div class="price-row">
+            <span class="price">₹129</span>
+            <button class="btn" onclick="addToCart('Hakka Noodles', 129)">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-card" data-name="dessert">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=700&q=80" alt="Dessert" />
+        <div class="food-info">
+          <h3>Chocolate Dessert</h3>
+          <p>Sweet chocolate dessert for a perfect ending.</p>
+          <div class="price-row">
+            <span class="price">₹99</span>
+            <button class="btn" onclick="addToCart('Chocolate Dessert', 99)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cart">
+    <h2 class="section-title">Your Cart</h2>
+    <div class="cart">
+      <div id="cartItems">
+        <p>Your cart is empty.</p>
+      </div>
+      <div class="total" id="cartTotal">Total: ₹0</div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 FoodieHub. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      total += price;
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p>Your cart is empty.</p>';
+      } else {
+        cartItems.innerHTML = '';
+        cart.forEach((item, index) => {
+          cartItems.innerHTML += `
+            <div class="cart-item">
+              <span>${item.name}</span>
+              <span>₹${item.price}</span>
+            </div>
+          `;
+        });
+      }
+
+      cartTotal.textContent = `Total: ₹${total}`;
+    }
+
+    function searchFood() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.food-card');
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        card.style.display = name.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      alert('Thank you! Your message has been sent.');
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
